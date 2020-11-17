@@ -1,17 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import Colors from "../constants/Colors";
 import { useDispatch } from "react-redux";
 import * as actions from "../store/actions";
+import ImagePicker from "../components/ImagePicker";
 
 const NewPlacesScreen = props => {
   const [title, setTitle] = useState("");
+  const [selectedImage, setSelectedImage] = useState();
+  const [selectedLocation, setSelectedLocation] = useState();
 
   const dispatch = useDispatch();
 
   const handleTitleChange = value => {
     console.log(value);
     setTitle(value);
+  };
+
+  const handleImageTaken = imagePath => {
+    setSelectedImage(imagePath);
+  };
+
+  const handleLocationPick = useCallback(location => {
+    setSelectedLocation(location);
+  }, []);
+
+  const savePlaceHandler = () => {
+    dispatch(
+      placesActions.addPlace(titleValue, selectedImage, selectedLocation)
+    );
+    props.navigation.goBack();
   };
 
   const handleSaveTitle = () => {
@@ -27,6 +45,7 @@ const NewPlacesScreen = props => {
         value={title}
         style={styles.textInput}
       />
+      <ImagePicker onImageTaken={handleImageTaken} />
       <Button
         title="Save Place"
         onPress={handleSaveTitle}
