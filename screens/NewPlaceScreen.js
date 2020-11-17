@@ -25,15 +25,8 @@ const NewPlacesScreen = props => {
     setSelectedLocation(location);
   }, []);
 
-  const savePlaceHandler = () => {
-    dispatch(
-      placesActions.addPlace(titleValue, selectedImage, selectedLocation)
-    );
-    props.navigation.goBack();
-  };
-
-  const handleSaveTitle = () => {
-    dispatch(actions.addPlace(title));
+  const handleSaveplace = () => {
+    dispatch(actions.addPlace(title, selectedImage));
     props.navigation.goBack();
   };
 
@@ -48,7 +41,7 @@ const NewPlacesScreen = props => {
       <ImagePicker onImageTaken={handleImageTaken} />
       <Button
         title="Save Place"
-        onPress={handleSaveTitle}
+        onPress={handleSaveplace}
         color={Colors.primary}
       />
     </View>

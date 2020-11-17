@@ -5,7 +5,7 @@ import Place from "../components/Place";
 
 const PlaceListScreen = props => {
   const places = useSelector(state => state.places.places);
-  console.log(places);
+  console.log("PLACE LIST", places);
 
   if (!places || places.length < 1) {
     return (
@@ -24,10 +24,11 @@ const PlaceListScreen = props => {
           onSelect={() => {
             props.navigation.navigate("Place", {
               placeTitle: itemData.item.title,
-              placeId: itemData.item.id
+              placeId: itemData.item.id,
+              placeImage: itemData.item.imageUri
             });
           }}
-          image={null}
+          imageUri={itemData.item.imageUri}
           title={itemData.item.title}
           address={null}
         />
