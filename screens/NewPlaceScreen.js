@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import Colors from "../constants.js/Colors";
+import { useDispatch } from "react-redux";
+import * as actions from "../store/actions";
 
 const NewPlacesScreen = props => {
   const [title, setTitle] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleTitleChange = value => {
     console.log(value);
@@ -11,7 +15,8 @@ const NewPlacesScreen = props => {
   };
 
   const handleSaveTitle = () => {
-    console.log("saving", title);
+    dispatch(actions.addPlace({ title: title }));
+    props.navigation.goBack();
   };
 
   return (
