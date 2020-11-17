@@ -4,28 +4,27 @@ import { useSelector } from "react-redux";
 import Place from "../components/Place";
 
 const PlaceListScreen = props => {
-  const places = useSelector(state => state.places);
+  const places = useSelector(state => state.places.places);
+  console.log(places);
+
   return (
-    <View>
-      <Text>Title</Text>
-      <FlatList
-        data={places}
-        keyExtractor={item => item.id}
-        renderItem={itemData => (
-          <Place
-            onSelect={() => {
-              props.navigation.navigate("Place", {
-                placeTitle: itemData.item.title,
-                placeId: itemData.item.id
-              });
-            }}
-            image={null}
-            title={itemData.item.title}
-            address={null}
-          />
-        )}
-      />
-    </View>
+    <FlatList
+      data={places}
+      keyExtractor={item => item.id}
+      renderItem={itemData => (
+        <Place
+          onSelect={() => {
+            props.navigation.navigate("Place", {
+              placeTitle: itemData.item.title,
+              placeId: itemData.item.id
+            });
+          }}
+          image={null}
+          title={itemData.item.title}
+          address={null}
+        />
+      )}
+    />
   );
 };
 
