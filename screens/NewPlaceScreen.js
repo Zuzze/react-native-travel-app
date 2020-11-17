@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
-import Colors from "../constants.js/Colors";
+import Colors from "../constants/Colors";
 import { useDispatch } from "react-redux";
 import * as actions from "../store/actions";
 
@@ -15,14 +15,18 @@ const NewPlacesScreen = props => {
   };
 
   const handleSaveTitle = () => {
-    dispatch(actions.addPlace({ title: title }));
+    dispatch(actions.addPlace(title));
     props.navigation.goBack();
   };
 
   return (
     <View style={styles.form}>
       <Text style={styles.label}>Add New place</Text>
-      <TextInput onChange={handleTitleChange} style={styles.textInput} />
+      <TextInput
+        onChangeText={handleTitleChange}
+        value={title}
+        style={styles.textInput}
+      />
       <Button
         title="Save Place"
         onPress={handleSaveTitle}

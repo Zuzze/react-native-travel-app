@@ -1,5 +1,5 @@
 export const ADD_PLACE = "ADD_PLACE";
 
 export const addPlace = title => {
-  return { type: ADD_PLACE, data: { title: title } };
+  return { type: ADD_PLACE, payload: { title: title } };
 };

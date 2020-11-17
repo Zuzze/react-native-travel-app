@@ -5,7 +5,7 @@ import NewPlaceScreen from "../screens/NewPlaceScreen";
 import MapScreen from "../screens/MapScreen";
 import React from "react";
 import { Button, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Colors from "../constants.js/Colors";
+import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 
 export const Routes = {

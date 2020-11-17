@@ -9,4 +9,10 @@ const PlaceDetailsScreen = props => {
   );
 };
 
+PlaceDetailsScreen.navigationOption = navData => {
+  return {
+    headerTitle: navData.navigationOption.getParam("placeTitle")
+  };
+};
+
 export default PlaceDetailsScreen;
