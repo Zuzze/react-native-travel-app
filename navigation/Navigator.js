@@ -16,14 +16,10 @@ export const Routes = {
 };
 
 const stackNavigatorConfig = {
-  initialRouteName: Routes.places,
-  navigationOptions: ({ navigate, navigation }) => ({
-    headerRight: (
-      <TouchableOpacity onPress={() => navigation.navigate("")}>
-        <Text>Click</Text>
-      </TouchableOpacity>
-    )
-  })
+  headerStyle: {
+    backgroundColor: Colors.header
+  },
+  headerTintColor: Colors.headerText
 };
 
 const Stack = createStackNavigator();
@@ -36,19 +32,23 @@ function MainNavigator() {
         component={PlacesListScreen}
         options={({ navigate, navigation }) => ({
           headerTitle: props => <Text style={styles.headerText}>Hikes</Text>,
-          headerStyle: {
-            backgroundColor: Colors.header
-          },
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate(Routes.newPlace)}
             >
               <Ionicons name="ios-add" style={styles.headerButton} size={30} />
             </TouchableOpacity>
-          )
+          ),
+          ...stackNavigatorConfig
         })}
       />
-      <Stack.Screen name={Routes.place} component={PlaceDetailsScreen} />
+      <Stack.Screen
+        name={Routes.place}
+        component={PlaceDetailsScreen}
+        options={({ navigate, navigation }) => ({
+          ...stackNavigatorConfig
+        })}
+      />
       <Stack.Screen
         name={Routes.newPlace}
         component={NewPlaceScreen}
@@ -56,10 +56,7 @@ function MainNavigator() {
           headerTitle: props => (
             <Text style={styles.headerText}>Add new place</Text>
           ),
-          headerStyle: {
-            backgroundColor: Colors.header
-          },
-          headerTintColor: Colors.headerText
+          ...stackNavigatorConfig
         })}
       />
       <Stack.Screen name={Routes.map} component={MapScreen} />

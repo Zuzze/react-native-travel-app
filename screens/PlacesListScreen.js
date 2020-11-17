@@ -7,6 +7,14 @@ const PlaceListScreen = props => {
   const places = useSelector(state => state.places.places);
   console.log(places);
 
+  if (!places || places.length < 1) {
+    return (
+      <View>
+        <Text>No places yet</Text>
+      </View>
+    );
+  }
+
   return (
     <FlatList
       data={places}
