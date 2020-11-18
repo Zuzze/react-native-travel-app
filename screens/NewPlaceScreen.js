@@ -30,6 +30,7 @@ const NewPlacesScreen = props => {
   };
 
   const handleLocationPick = useCallback(location => {
+    console.log("NEW PLACE: handleLocationPick", location);
     setSelectedLocation(location);
   }, []);
 

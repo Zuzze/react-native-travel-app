@@ -7,10 +7,10 @@ import {
   Platform
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-
 import Colors from "../constants/Colors";
 
 /** Interactive Map Screen */
+
 const MapScreen = props => {
   const initialLocation = props.route.params.initialLocation;
   const readonly = props.route.params.readonly;
@@ -26,7 +26,7 @@ const MapScreen = props => {
     longitudeDelta: 0.0421
   };
 
-  const selectLocationHandler = event => {
+  const handleSelectLocation = event => {
     if (readonly) {
       return;
     }
@@ -36,17 +36,29 @@ const MapScreen = props => {
     });
   };
 
-  const savePickedLocationHandler = useCallback(() => {
+  const savePickedLocation = useCallback(() => {
+    console.log("MAP SCREEN: selected location", selectedLocation);
     if (!selectedLocation) {
       // could show an alert!
+      console.error("MAP SCREEN: Location not valid");
       return;
     }
-    props.navigation.navigate("NewPlace", { pickedLocation: selectedLocation });
+    props.navigation.navigate("New", { pickedLocation: selectedLocation });
   }, [selectedLocation]);
 
   useEffect(() => {
-    props.navigation.setParams({ saveLocation: savePickedLocationHandler });
-  }, [savePickedLocationHandler]);
+    props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={styles.headerButton}
+          onPress={savePickedLocation}
+        >
+          <Text style={styles.headerButtonText}>Save</Text>
+        </TouchableOpacity>
+      )
+    });
+    // props.navigation.setParams({ saveLocation: savePickedLocation });
+  }, [savePickedLocation]);
 
   let markerCoordinates;
 
@@ -61,7 +73,7 @@ const MapScreen = props => {
     <MapView
       style={styles.map}
       region={mapRegion}
-      onPress={selectLocationHandler}
+      onPress={handleSelectLocation}
     >
       {markerCoordinates && (
         <Marker title="Picked Location" coordinate={markerCoordinates} />
@@ -70,7 +82,7 @@ const MapScreen = props => {
   );
 };
 
-MapScreen.navigationOptions = navData => {
+/*MapScreen.navigationOptions = navData => {
   const saveFn = navData.navigation.getParam("saveLocation");
   const readonly = navData.navigation.getParam("readonly");
   if (readonly) {
@@ -83,7 +95,7 @@ MapScreen.navigationOptions = navData => {
       </TouchableOpacity>
     )
   };
-};
+};*/
 
 const styles = StyleSheet.create({
   map: {

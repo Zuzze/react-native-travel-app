@@ -59,7 +59,16 @@ function MainNavigator() {
           ...stackNavigatorConfig
         })}
       />
-      <Stack.Screen name={Routes.map} component={MapScreen} />
+      <Stack.Screen
+        name={Routes.map}
+        component={MapScreen}
+        options={({ navigate, navigation }) => ({
+          headerTitle: props => (
+            <Text style={styles.headerText}>Pick a place</Text>
+          ),
+          ...stackNavigatorConfig
+        })}
+      />
     </Stack.Navigator>
   );
 }
