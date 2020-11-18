@@ -1,8 +1,12 @@
-export const ADD_PLACE = "ADD_PLACE";
 import * as FileSystem from "expo-file-system";
+import { insertPlace, fetchPlaces } from "../helpers/db";
+
+export const ADD_PLACE = "ADD_PLACE";
+export const SET_PLACES = "SET_PLACES";
 
 /** Adds new place to local file system */
-export const addPlace = (title, image, location) => {
+export const addPlace = (title, image, location = { lat: 0, lng: 0 }) => {
+  console.log("REDUX ACTION: adding place...");
   // operation is asynchronus so use async
   return async dispatch => {
     //Location
@@ -17,10 +21,10 @@ export const addPlace = (title, image, location) => {
     const resData = await response.json();
     if (!resData.results) {
       throw new Error("Something went wrong!");
-    }
+    }*/
 
-    const address = resData.results[0].formatted_address;
-*/
+    const address = "dum"; // resData.results[0].formatted_address;
+
     // image, move async moves image from place A to B
     const fileName = image.split("/").pop();
     const newPath = FileSystem.documentDirectory + fileName;
@@ -35,17 +39,17 @@ export const addPlace = (title, image, location) => {
       // connecct to db
       const dbResult = await insertPlace(
         title,
-        newPath
-        // address,
-        // location.lat,
-        // location.lng
+        newPath,
+        address,
+        location.lat,
+        location.lng
       );
       console.log(dbResult);
 
       // trigger redux reducer to save info also in redux
       dispatch({
         type: ADD_PLACE,
-        placeData: {
+        payload: {
           id: dbResult.insertId,
           title: title,
           imageUri: newPath
