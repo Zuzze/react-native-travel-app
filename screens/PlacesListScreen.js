@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, View, Text, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Place from "../components/Place";
+import * as actions from "../store/actions";
 
 const PlaceListScreen = props => {
+  // note that name of the file in store is the first key, second one is inside places state
   const places = useSelector(state => state.places.places);
-  console.log("PLACE LIST", places);
+  const dispatch = useDispatch();
+
+  // load places from local SQLite db
+  useEffect(() => {
+    dispatch(actions.loadPlaces());
+  }, [dispatch]);
 
   if (!places || places.length < 1) {
     return (

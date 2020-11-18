@@ -47,6 +47,7 @@ export const addPlace = (title, image, location = { lat: 0, lng: 0 }) => {
       console.log(dbResult);
 
       // trigger redux reducer to save info also in redux
+      // use ID from db result in redux too
       dispatch({
         type: ADD_PLACE,
         payload: {
@@ -62,6 +63,19 @@ export const addPlace = (title, image, location = { lat: 0, lng: 0 }) => {
       });
     } catch (err) {
       console.log(err);
+      throw err;
+    }
+  };
+};
+
+export const loadPlaces = () => {
+  return async dispatch => {
+    try {
+      console.log("REDUX ACTION: loading places...");
+      const dbResult = await fetchPlaces();
+      console.log(dbResult);
+      dispatch({ type: SET_PLACES, places: dbResult.rows._array });
+    } catch (err) {
       throw err;
     }
   };

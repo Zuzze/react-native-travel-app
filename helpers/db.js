@@ -6,7 +6,7 @@ const db = SQLite.openDatabase("places.db");
 
 // create table if it does not exist
 export const init = () => {
-  console.log("initializing database...");
+  console.log("SQLITE: initializing database...");
   const promise = new Promise((resolve, reject) => {
     // tx = transaction object
     // _  = query
@@ -31,7 +31,7 @@ export const init = () => {
 
 export const insertPlace = (title, imageUri, address, lat, lng) => {
   const promise = new Promise((resolve, reject) => {
-    console.log("inserting place to db...");
+    console.log("SQLITE: inserting place to db...");
     db.transaction(tx => {
       tx.executeSql(
         // you could add value string as ${title} etc but would be open to SQL injection vulnerability
@@ -55,7 +55,7 @@ export const insertPlace = (title, imageUri, address, lat, lng) => {
 
 export const fetchPlaces = () => {
   const promise = new Promise((resolve, reject) => {
-    console.log("fetching place from db...");
+    console.log("SQLITE: fetching places from db...");
     db.transaction(tx => {
       tx.executeSql(
         "SELECT * FROM places",
