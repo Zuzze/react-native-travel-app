@@ -17,8 +17,6 @@ const MapPreview = props => {
     },${props.location.lng}&key=${ENV().googleApiKey}`;
   }
 
-  console.log("MAP PREVIEW: image url", imagePreviewUrl);
-
   return (
     <TouchableOpacity
       onPress={props.onPress}

@@ -49,6 +49,7 @@ const NewPlacesScreen = props => {
         />
         <ImagePicker onImageTaken={handleImageTaken} />
         <LocationPicker
+          route={props.route}
           navigation={props.navigation}
           onLocationPicked={handleLocationPick}
         />

@@ -18,9 +18,10 @@ const LocationPicker = props => {
   const [isFetching, setIsFetching] = useState(false);
   const [pickedLocation, setPickedLocation] = useState();
 
-  // old props.navigation.getParam()
+  // old props.navigation.getParam("pickedLocation") => props.route.params.pickedLocation
+  // https://reactnavigation.org/docs/upgrading-from-4.x/#no-more-getparam
   console.log("LOCATION PICKER", props);
-  const mapPickedLocation = null; // props.navigation.getParam("pickedLocation");
+  const mapPickedLocation = props.route.params?.someParam ?? null;
 
   const { onLocationPicked } = props;
 
@@ -78,7 +79,9 @@ const LocationPicker = props => {
 
   const handleMapPress = () => {
     // navigate to map page to show full page map
-    props.navigation.navigate("Map");
+    props.navigation.navigate("Map", {
+      pickedLocation
+    });
   };
 
   return (
