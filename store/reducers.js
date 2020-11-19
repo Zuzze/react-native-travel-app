@@ -27,9 +27,12 @@ export default placesReducer = (state = initialState, action) => {
       const newPlace = new Place(
         action.payload.id.toString(),
         action.payload.title,
-        action.payload.imageUri
+        action.payload.imageUri,
+        action.payload.address,
+        action.payload.lat,
+        action.payload.lng
       );
-      console.log("new", newPlace);
+      console.log("REDUX  REDUCER: ADD_PLACE", newPlace);
       return {
         places: state.places.concat(newPlace)
       };

@@ -21,7 +21,7 @@ const LocationPicker = props => {
   // old props.navigation.getParam("pickedLocation") => props.route.params.pickedLocation
   // https://reactnavigation.org/docs/upgrading-from-4.x/#no-more-getparam
   console.log("LOCATION PICKER", props);
-  const mapPickedLocation = props.route.params?.someParam ?? null;
+  const mapPickedLocation = props.route.params?.pickedLocation ?? null;
 
   const { onLocationPicked } = props;
 
@@ -31,6 +31,13 @@ const LocationPicker = props => {
       onLocationPicked(mapPickedLocation);
     }
   }, [mapPickedLocation, onLocationPicked]);
+
+  // on component mount fetch current location automatically if not available
+  useEffect(() => {
+    if (!mapPickedLocation) {
+      handleGetLocationButtonPress();
+    }
+  }, []);
 
   // check permissions
   const verifyPermissions = async () => {
@@ -99,11 +106,6 @@ const LocationPicker = props => {
       </MapPreview>
       <View style={styles.actions}>
         <Button
-          title="Get User Location"
-          color={Colors.primary}
-          onPress={handleGetLocationButtonPress}
-        />
-        <Button
           title="Pick on Map"
           color={Colors.primary}
           onPress={handleMapPress}
@@ -132,3 +134,11 @@ const styles = StyleSheet.create({
 });
 
 export default LocationPicker;
+
+/**
+ *     <Button
+          title="Get User Location"
+          color={Colors.primary}
+          onPress={handleGetLocationButtonPress}
+        />
+ */

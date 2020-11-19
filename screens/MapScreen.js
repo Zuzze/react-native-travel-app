@@ -18,6 +18,7 @@ const MapScreen = props => {
   const [selectedLocation, setSelectedLocation] = useState(initialLocation);
 
   // react-native-maps format
+  // latitude and longitude define the center focus point of the map
   const mapRegion = {
     latitude: initialLocation ? initialLocation.lat : 37.78,
     longitude: initialLocation ? initialLocation.lng : -122.43,
@@ -47,16 +48,18 @@ const MapScreen = props => {
   }, [selectedLocation]);
 
   useEffect(() => {
-    props.navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={styles.headerButton}
-          onPress={savePickedLocation}
-        >
-          <Text style={styles.headerButtonText}>Save</Text>
-        </TouchableOpacity>
-      )
-    });
+    if (!readonly) {
+      props.navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={savePickedLocation}
+          >
+            <Text style={styles.headerButtonText}>Save</Text>
+          </TouchableOpacity>
+        )
+      });
+    }
     // props.navigation.setParams({ saveLocation: savePickedLocation });
   }, [savePickedLocation]);
 
@@ -81,21 +84,6 @@ const MapScreen = props => {
     </MapView>
   );
 };
-
-/*MapScreen.navigationOptions = navData => {
-  const saveFn = navData.navigation.getParam("saveLocation");
-  const readonly = navData.navigation.getParam("readonly");
-  if (readonly) {
-    return {};
-  }
-  return {
-    headerRight: (
-      <TouchableOpacity style={styles.headerButton} onPress={saveFn}>
-        <Text style={styles.headerButtonText}>Save</Text>
-      </TouchableOpacity>
-    )
-  };
-};*/
 
 const styles = StyleSheet.create({
   map: {

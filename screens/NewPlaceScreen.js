@@ -29,6 +29,7 @@ const NewPlacesScreen = props => {
     setSelectedImage(imagePath);
   };
 
+  // wrap to useCallback so that functiion is not created again on every location pick
   const handleLocationPick = useCallback(location => {
     console.log("NEW PLACE: handleLocationPick", location);
     setSelectedLocation(location);

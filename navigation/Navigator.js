@@ -63,9 +63,7 @@ function MainNavigator() {
         name={Routes.map}
         component={MapScreen}
         options={({ navigate, navigation }) => ({
-          headerTitle: props => (
-            <Text style={styles.headerText}>Pick a place</Text>
-          ),
+          headerTitle: props => <Text style={styles.headerText}>Map</Text>,
           ...stackNavigatorConfig
         })}
       />

@@ -31,7 +31,7 @@ export const init = () => {
 
 export const insertPlace = (title, imageUri, address, lat, lng) => {
   const promise = new Promise((resolve, reject) => {
-    console.log("SQLITE: inserting place to db...");
+    console.log("SQLITE: inserting place to db...", address, lat, lng);
     db.transaction(tx => {
       tx.executeSql(
         // you could add value string as ${title} etc but would be open to SQL injection vulnerability
