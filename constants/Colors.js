@@ -1,8 +1,8 @@
 const Colors = {
-  primary: "aquamarine",
+  primary: "#659ad6",
   light: "white",
   dark: "#222222",
-  header: "#222222",
-  headerText: "#ffffff"
+  header: "white",
+  headerText: "#222222"
 };
 export default Colors;

@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
   },
   locationContainer: {
     marginTop: -50,
-    width: "95%",
-    maxWidth: 350,
+    width: "100%",
+
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "black",
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
     backgroundColor: "white",
-    borderRadius: 10
+    borderRadius: 30
   },
   addressContainer: {
     padding: 20

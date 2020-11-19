@@ -7,14 +7,26 @@ import ENV from "../env";
 const MapPreview = props => {
   let imagePreviewUrl;
 
+  const mapType = "hybrid"; // hybrid, satellite, roadmap, terrain
+  const zoom = 13;
+  const markerColor = "blue"; // any web color
+  const markerSize = "small"; // tiny, mid, small, normal (default)
+  const markerLabel = "A"; // only visible on mid and default size
+  const centerCoords = `${props.location?.lat ?? 0},${props.location?.lng ??
+    0}`;
+  const coords = centerCoords;
+
+  // API uses | character as separator that must be encoded before sensing the request
+  // encoded value of | is %7C
+  // total marker format is markers=markerStyles|markerLocation1| markerLocation2|
+  // total url example
+  // https://maps.googleapis.com/maps/api/staticmap?center=Williamsburg,Brooklyn,NY&zoom=13&size=400x400&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&key=YOUR_API_KEY
+  const pipe = "%7C";
+
   if (props.location) {
-    imagePreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${
-      props.location.lat
-    },${
-      props.location.lng
-    }&zoom=16&size=400x200&maptype=satellite&markers=color:blue%7Csize:tiny:A%7Clabel:A%7C${
-      props.location.lat
-    },${props.location.lng}&key=${ENV().googleApiKey}`;
+    imagePreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${centerCoords}&zoom=${zoom}&size=400x200&maptype=${mapType}&markers=color:${markerColor}${pipe}size:${markerSize}${pipe}label:${markerLabel}${pipe}${coords}&key=${
+      ENV().googleApiKey
+    }`;
   }
 
   return (

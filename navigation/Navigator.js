@@ -31,7 +31,9 @@ function MainNavigator() {
         name={Routes.places}
         component={PlacesListScreen}
         options={({ navigate, navigation }) => ({
-          headerTitle: props => <Text style={styles.headerText}>Hikes</Text>,
+          headerTitle: props => (
+            <Text style={styles.headerText}>SwissHikes</Text>
+          ),
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate(Routes.newPlace)}
