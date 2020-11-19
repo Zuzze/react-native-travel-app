@@ -7,7 +7,10 @@ import * as actions from "../store/actions";
 const PlaceListScreen = props => {
   // note that name of the file in store is the first key, second one is inside places state
   const places = useSelector(state => state.places.places);
-  console.log("PLACES LIST", places);
+  console.log(
+    "PLACES LIST",
+    places.map(place => place.title)
+  );
   const dispatch = useDispatch();
 
   // load places from local SQLite db

@@ -1,8 +1,18 @@
 import React, { useEffect } from "react";
-import { ScrollView, Image, View, Text, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import {
+  ScrollView,
+  Image,
+  Button,
+  View,
+  Alert,
+  Text,
+  StyleSheet
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import MapPreview from "../components/MapPreview";
 import Colors from "../constants/Colors";
+import { deletePlaceFromDatabase } from "../helpers/db";
+import * as actions from "../store/actions";
 
 const PlaceDetailsScreen = props => {
   const { placeTitle, placeId } = props.route.params;
@@ -10,9 +20,14 @@ const PlaceDetailsScreen = props => {
   const selectedPlace = useSelector(state => {
     return state.places.places.find(place => place.id === placeId);
   });
+
+  const dispatch = useDispatch();
   console.log("SELECTE PLACE", selectedPlace);
 
-  const selectedLocation = { lat: selectedPlace.lat, lng: selectedPlace.lng };
+  const selectedLocation = {
+    lat: selectedPlace?.lat ?? 0,
+    lng: selectedPlace?.lng ?? 0
+  };
 
   useEffect(() => {
     // dynamic title (place name) in react navigation 5.x is defined like this
@@ -28,19 +43,45 @@ const PlaceDetailsScreen = props => {
     });
   };
 
+  const handleDeletePlace = async () => {
+    console.log("handling delete button press");
+    try {
+      const placeDeleted = await deletePlaceFromDatabase(placeId);
+      if (placeDeleted) {
+        console.log("place deletion succesfully finished");
+        dispatch(actions.deletePlace(placeId));
+        props.navigation.navigate("Places");
+      }
+    } catch (err) {
+      console.log("place deletion failed", err);
+      Alert.alert(
+        "Deletion failed",
+        "System could not delete the place",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: false }
+      );
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={{ alignItems: "center" }}>
-      <Image source={{ uri: selectedPlace.imageUri }} style={styles.image} />
+      <Image
+        source={{ uri: selectedPlace?.imageUri ?? null }}
+        style={styles.image}
+      />
       <View style={styles.locationContainer}>
         <View style={styles.addressContainer}>
           <Text style={styles.title}>{placeTitle}</Text>
-          <Text style={styles.address}>{selectedPlace.address}</Text>
+          <Text style={styles.address}>
+            {selectedPlace?.address ?? "Not available"}
+          </Text>
         </View>
         <MapPreview
           style={styles.mapPreview}
           location={selectedLocation}
           onPress={handleShowMap}
         />
+        <Button title="Delete" onPress={handleDeletePlace} />
       </View>
     </ScrollView>
   );

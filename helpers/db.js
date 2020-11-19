@@ -53,6 +53,35 @@ export const insertPlace = (title, imageUri, address, lat, lng) => {
   return promise;
 };
 
+export const deletePlaceFromDatabase = id => {
+  console.log("SQLITE: DELETE_PLACE");
+  const promise = new Promise((resolve, reject) => {
+    console.log("SQLITE: deleting place from db...", id);
+    db.transaction(tx => {
+      tx.executeSql(
+        // you could add value string as ${title} etc but would be open to SQL injection vulnerability
+        // to avoid this, SQLLite supports syntax with ? marks that validates first no malicious activity is happening
+        // and then executes the query ? with the given array
+        `DELETE FROM places where id=?`,
+        [id],
+        // _ is a repetition of your query
+        (_, result) => {
+          console.log("Place deleted successfully");
+          console.log("Results", result.rowsAffected);
+          resolve(result);
+        },
+        // _ is a repetition of your query
+        (_, err) => {
+          console.log("Error occured while deleting place");
+          console.log(err);
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
 export const fetchPlaces = () => {
   const promise = new Promise((resolve, reject) => {
     console.log("SQLITE: fetching places from db...");

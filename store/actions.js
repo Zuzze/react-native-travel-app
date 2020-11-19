@@ -1,9 +1,14 @@
 import * as FileSystem from "expo-file-system";
-import { insertPlace, fetchPlaces } from "../helpers/db";
+import {
+  insertPlace,
+  fetchPlaces,
+  deletePlaceFromDatabase
+} from "../helpers/db";
 import ENV from "../env";
 
 export const ADD_PLACE = "ADD_PLACE";
 export const SET_PLACES = "SET_PLACES";
+export const DELETE_PLACE = "DELETE_PLACE";
 
 /** Adds new place to local file system */
 export const addPlace = (title, image, location) => {
@@ -68,6 +73,31 @@ export const addPlace = (title, image, location) => {
       throw err;
     }
   };
+};
+
+/** Adds new place to local file system */
+export const deletePlace = id => {
+  console.log("REDUX ACTION: deleting place...", id);
+  /*const dbResult = await deletePlaceFromDatabase(id);
+    console.log(dbResult);
+    if (dbResult) {
+        return true
+    }*/
+  return async dispatch => {
+    dispatch({ type: DELETE_PLACE, id: id });
+  };
+  // operation is asynchronus so use async
+  /*return async dispatch => {
+    console.log("started dispatch");
+    try {
+      console.log("REDUX ACTION: deleting place...");
+      const dbResult = await deletePlaceFromDatabase(id);
+      console.log(dbResult);
+      dispatch({ type: DELETE_PLACE, id: id });
+    } catch (err) {
+      throw err;
+    }
+  };*/
 };
 
 export const loadPlaces = () => {

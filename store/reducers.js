@@ -1,4 +1,4 @@
-import { ADD_PLACE, SET_PLACES } from "./actions";
+import { ADD_PLACE, SET_PLACES, DELETE_PLACE } from "./actions";
 import Place from "../models/place";
 
 const initialState = {
@@ -35,6 +35,14 @@ export default placesReducer = (state = initialState, action) => {
       console.log("REDUX  REDUCER: ADD_PLACE", newPlace);
       return {
         places: state.places.concat(newPlace)
+      };
+    case DELETE_PLACE:
+      const updatedPlaces = state.places.filter(
+        place => place.id !== action.id
+      );
+      console.log("REDUX  REDUCER: DELETE_PLACE", updatedPlaces);
+      return {
+        places: updatedPlaces
       };
     default:
       return state;
