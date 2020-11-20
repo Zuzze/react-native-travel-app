@@ -10,6 +10,8 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Place from "../components/Place";
 import * as actions from "../store/actions";
+import HorizontalList from "../components/HorizontalList";
+import { featuredPlaces } from "../data/featuredPlaces";
 
 const PlaceListScreen = props => {
   // note that name of the file in store is the first key, second one is inside places state
@@ -53,13 +55,20 @@ const PlaceListScreen = props => {
       <ImageBackground
         source={{
           uri:
-            "https://cdn.pixabay.com/photo/2019/10/08/18/13/matterhorn-4535693_1280.jpg"
+            "https://cdn.pixabay.com/photo/2019/11/15/15/48/mountain-4628685_1280.jpg"
         }}
         style={styles.image}
       >
         <FlatList
           ListHeaderComponent={() => (
-            <Text style={styles.slogan}>Let the adventure begin</Text>
+            <View>
+              <Text style={styles.slogan}>Let the adventure begin</Text>
+              <Text style={styles.subtitle}>Featured</Text>
+              <HorizontalList
+                data={featuredPlaces}
+                navigation={props.navigation}
+              />
+            </View>
           )}
           data={places}
           contentContainerStyle={{ paddingBottom: 20, paddingTop: 90 }}
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
   },
   slogan: {
     textAlign: "center",
-    backgroundColor: "rgba(255,255,255,0.3)",
+    backgroundColor: "rgba(56,88,175,0.2)",
     paddingVertical: 20,
     marginTop: -90,
     fontSize: 20,
@@ -118,7 +127,20 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     overflow: "hidden",
-    alignItems: "center"
+    alignItems: "center",
+    elevation: 5,
+    // overflow: "hidden",
+    shadowColor: "gray",
+    shadowOpacity: 0.26,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 2 }
+  },
+  subtitle: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
+    paddingLeft: 40,
+    paddingTop: 20
   },
   cardBackground: {
     textAlign: "center",

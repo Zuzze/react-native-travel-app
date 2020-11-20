@@ -8,17 +8,28 @@ import {
   TouchableOpacity
 } from "react-native";
 import Colors from "../constants/Colors";
+import StarRating from "./StarRating";
 
 const Place = props => {
   // console.log("PLACE", props);
   return (
-    <TouchableOpacity onPress={props.onSelect} style={styles.placeItem}>
+    <TouchableOpacity
+      onPress={props.onSelect}
+      style={props.small ? styles.smallPlaceItem : styles.placeItem}
+    >
       <View style={styles.card}>
-        <Image style={styles.image} source={{ uri: props.imageUri }} />
+        <Image
+          style={styles.image}
+          source={{
+            uri:
+              "https://cdn.pixabay.com/photo/2020/11/01/11/19/mountains-5703439_1280.jpg"
+          }}
+        />
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>{props.title}</Text>
-          <Text style={styles.address}>{props.address}</Text>
+          <Text style={styles.title}>Alpstein</Text>
+          <StarRating rating={4} count={21} />
         </View>
+        <Text style={styles.address}>Appenzell District</Text>
       </View>
     </TouchableOpacity>
   );
@@ -37,14 +48,23 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: "rgba(255, 255, 255, 0.9)"
   },
+  smallPlaceItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 0,
+    marginTop: 30,
+    width: 100,
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 30,
+    borderRadius: 25,
+    backgroundColor: "rgba(255, 255, 255, 0.9)"
+  },
   card: {
     borderRadius: 25,
     paddingVertical: 20,
     overflow: "hidden",
     flex: 1,
-    marginTop: -40,
-    alignItems: "center",
-    justifyContent: "center"
+    marginTop: -40
   },
   image: {
     width: "100%",
@@ -59,8 +79,10 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     paddingHorizontal: 20,
-    justifyContent: "center",
-    alignItems: "flex-start"
+    flex: 1,
+    width: "100%",
+    justifyContent: "space-between",
+    flexDirection: "row"
   },
   title: {
     color: "black",
@@ -69,8 +91,23 @@ const styles = StyleSheet.create({
   },
   address: {
     color: "#666",
-    fontSize: 16
+    fontSize: 16,
+    textAlign: "left",
+    marginLeft: 20
   }
 });
 
 export default Place;
+
+/*
+ <Image
+          style={styles.image}
+          source={{
+            uri: props.imageUri
+          }}
+        />
+        <View style={styles.infoContainer}>
+          <Text style={styles.title}>{props.title}</Text>
+          <Text style={styles.address}>{props.address}</Text>
+        </View>
+*/

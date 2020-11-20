@@ -13,13 +13,21 @@ import MapPreview from "../components/MapPreview";
 import Colors from "../constants/Colors";
 import { deletePlaceFromDatabase } from "../helpers/db";
 import * as actions from "../store/actions";
+import { featuredPlaces } from "../data/featuredPlaces";
+import StarRating from "../components/StarRating";
 
 const PlaceDetailsScreen = props => {
   const { placeTitle, placeId } = props.route.params;
 
-  const selectedPlace = useSelector(state => {
-    return state.places.places.find(place => place.id === placeId);
-  });
+  let selectedPlace;
+
+  if (props.route.params.featured) {
+    selectedPlace = featuredPlaces.find(place => place.id === placeId);
+  } else {
+    selectedPlace = useSelector(state => {
+      return state.places.places.find(place => place.id === placeId);
+    });
+  }
 
   const dispatch = useDispatch();
   console.log("SELECTE PLACE", selectedPlace);
@@ -70,17 +78,22 @@ const PlaceDetailsScreen = props => {
         style={styles.image}
       />
       <View style={styles.locationContainer}>
-        <View style={styles.addressContainer}>
+        <View style={styles.titleContainer}>
           <Text style={styles.title}>{placeTitle}</Text>
+          <StarRating style={styles.rating} count={2} rating={3} size={20} />
+        </View>
+        <View style={styles.addressContainer}>
           <Text style={styles.address}>
             {selectedPlace?.address ?? "Not available"}
           </Text>
         </View>
-        <MapPreview
-          style={styles.mapPreview}
-          location={selectedLocation}
-          onPress={handleShowMap}
-        />
+        <View style={styles.mapContainer}>
+          <MapPreview
+            style={styles.mapPreview}
+            location={selectedLocation}
+            onPress={handleShowMap}
+          />
+        </View>
         <Button title="Delete" onPress={handleDeletePlace} />
       </View>
     </ScrollView>
@@ -97,10 +110,11 @@ const styles = StyleSheet.create({
   locationContainer: {
     marginTop: -50,
     width: "100%",
-
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
     shadowColor: "black",
+    paddingHorizontal: 20,
+    paddingTop: 20,
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
@@ -108,19 +122,36 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 30
   },
+  titleContainer: {
+    padding: 10,
+    flex: 1,
+    width: "100%",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center"
+  },
   addressContainer: {
-    padding: 20
+    paddingHorizontal: 10,
+    paddingTop: 0,
+    paddingBottom: 30
   },
   title: {
     fontSize: 24,
-    marginBottom: 10
+    marginBottom: 10,
+    textAlign: "left"
   },
   address: {
     color: "gray",
-    textAlign: "center"
+    textAlign: "left"
+  },
+  mapContainer: {
+    alignItems: "center",
+    width: "100%"
   },
   mapPreview: {
     width: "100%",
+    borderRadius: 20,
+    overflow: "hidden",
     maxWidth: 350,
     height: 300,
     borderBottomLeftRadius: 10,
