@@ -4,9 +4,10 @@ import PlaceDetailsScreen from "../screens/PlaceDetailsScreen";
 import NewPlaceScreen from "../screens/NewPlaceScreen";
 import MapScreen from "../screens/MapScreen";
 import React from "react";
-import { Button, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import TitleText from "../components/TitleText";
 
 export const Routes = {
   places: "Places",
@@ -32,7 +33,15 @@ function MainNavigator() {
         component={PlacesListScreen}
         options={({ navigate, navigation }) => ({
           headerTitle: props => (
-            <Text style={styles.headerText}>SwissHikes</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+            >
+              <Ionicons name="ios-pin" size={20} />
+              <TitleText style={styles.headerHomeText}>SwissHikes</TitleText>
+            </View>
           ),
           headerRight: () => (
             <TouchableOpacity
@@ -88,7 +97,16 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: Colors.headerText,
-    fontSize: 20
+    marginLeft: 10,
+    fontSize: 20,
+    fontFamily: "montserrat-bold"
+  },
+  headerHomeText: {
+    color: Colors.headerText,
+
+    marginLeft: 10,
+    fontSize: 20,
+    fontFamily: "sofia"
   }
 });
 

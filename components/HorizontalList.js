@@ -8,7 +8,7 @@ const HorizontalList = props => {
       horizontal={true}
       data={props.data}
       contentContainerStyle={{
-        paddingLeft: 20,
+        paddingHorizontal: 20,
         paddingTop: 20,
         paddingBottom: 10
       }}

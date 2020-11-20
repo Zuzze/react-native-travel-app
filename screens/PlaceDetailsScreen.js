@@ -15,6 +15,10 @@ import { deletePlaceFromDatabase } from "../helpers/db";
 import * as actions from "../store/actions";
 import { featuredPlaces } from "../data/featuredPlaces";
 import StarRating from "../components/StarRating";
+import TitleText from "../components/TitleText";
+import BodyText from "../components/BodyText";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const PlaceDetailsScreen = props => {
   const { placeTitle, placeId } = props.route.params;
@@ -40,7 +44,13 @@ const PlaceDetailsScreen = props => {
   useEffect(() => {
     // dynamic title (place name) in react navigation 5.x is defined like this
     // must be wrapped inside useEffect/use layout effect
-    props.navigation.setOptions({ title: placeTitle });
+    props.navigation.setOptions({
+      headerTitle: props => (
+        <TitleText style={{ color: Colors.dark, fontSize: 16 }}>
+          {placeTitle}
+        </TitleText>
+      )
+    });
   }, [placeTitle]);
 
   const handleShowMap = () => {
@@ -79,13 +89,13 @@ const PlaceDetailsScreen = props => {
       />
       <View style={styles.locationContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{placeTitle}</Text>
+          <TitleText style={styles.title}>{placeTitle}</TitleText>
           <StarRating style={styles.rating} count={2} rating={3} size={20} />
         </View>
         <View style={styles.addressContainer}>
-          <Text style={styles.address}>
+          <BodyText style={styles.address}>
             {selectedPlace?.address ?? "Not available"}
-          </Text>
+          </BodyText>
         </View>
         <View style={styles.mapContainer}>
           <MapPreview
@@ -93,8 +103,12 @@ const PlaceDetailsScreen = props => {
             location={selectedLocation}
             onPress={handleShowMap}
           />
+          <TouchableOpacity style={styles.button} onPress={handleDeletePlace}>
+            <BodyText>
+              Delete <Ionicons name="ios-trash" size={20} />
+            </BodyText>
+          </TouchableOpacity>
         </View>
-        <Button title="Delete" onPress={handleDeletePlace} />
       </View>
     </ScrollView>
   );
@@ -120,7 +134,8 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
     backgroundColor: "white",
-    borderRadius: 30
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30
   },
   titleContainer: {
     padding: 10,
@@ -138,9 +153,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 10,
-    textAlign: "left"
+    textAlign: "left",
+    color: "#333333"
   },
   address: {
+    fontSize: 18,
     color: "gray",
     textAlign: "left"
   },
@@ -156,6 +173,16 @@ const styles = StyleSheet.create({
     height: 300,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10
+  },
+  button: {
+    width: "100%",
+    margin: 20,
+    alignItems: "center",
+    borderRadius: 30,
+    backgroundColor: Colors.primary,
+    overflow: "hidden",
+    minWidth: 200,
+    padding: 10
   }
 });
 

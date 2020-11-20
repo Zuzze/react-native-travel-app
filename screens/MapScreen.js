@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Colors from "../constants/Colors";
+import BodyText from "../components/BodyText";
 
 /** Interactive Map Screen */
 
@@ -55,7 +56,7 @@ const MapScreen = props => {
             style={styles.headerButton}
             onPress={savePickedLocation}
           >
-            <Text style={styles.headerButtonText}>Save</Text>
+            <BodyText style={styles.headerButtonText}>Save</BodyText>
           </TouchableOpacity>
         )
       });

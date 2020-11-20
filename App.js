@@ -7,6 +7,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { AppLoading } from "expo";
+import * as Font from "expo-font";
 import placesReducer from "./store/reducers";
 import { init } from "./helpers/db";
 
@@ -29,7 +30,8 @@ const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 const fetchFonts = () => {
   return Font.loadAsync({
     montserrat: require("./assets/fonts/Montserrat-Regular.ttf"),
-    "montserrat-bold": require("./assets/fonts/Montserrat-Bold.ttf")
+    "montserrat-bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+    sofia: require("./assets/fonts/Sofia-Regular.ttf")
   });
 };
 

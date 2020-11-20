@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import StarRating from "./StarRating";
+import TitleText from "./TitleText";
+import BodyText from "./BodyText";
 
 const Place = props => {
   // console.log("PLACE", props);
@@ -26,10 +28,10 @@ const Place = props => {
           }}
         />
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>Alpstein</Text>
+          <TitleText style={styles.title}>Alpstein</TitleText>
           <StarRating rating={4} count={21} />
         </View>
-        <Text style={styles.address}>Appenzell District</Text>
+        <BodyText style={styles.address}>Appenzell District</BodyText>
       </View>
     </TouchableOpacity>
   );

@@ -12,6 +12,8 @@ import Place from "../components/Place";
 import * as actions from "../store/actions";
 import HorizontalList from "../components/HorizontalList";
 import { featuredPlaces } from "../data/featuredPlaces";
+import BodyText from "../components/BodyText";
+import TitleText from "../components/TitleText";
 
 const PlaceListScreen = props => {
   // note that name of the file in store is the first key, second one is inside places state
@@ -42,7 +44,7 @@ const PlaceListScreen = props => {
               source={require("../assets/blur.png")}
               style={styles.cardBackground}
             >
-              <Text style={styles.emptyText}>No places yet</Text>
+              <BodyText style={styles.emptyText}>No places yet</BodyText>
             </ImageBackground>
           </View>
         </ImageBackground>
@@ -57,13 +59,16 @@ const PlaceListScreen = props => {
           uri:
             "https://cdn.pixabay.com/photo/2019/11/15/15/48/mountain-4628685_1280.jpg"
         }}
+        blurRadius={1}
         style={styles.image}
       >
         <FlatList
           ListHeaderComponent={() => (
             <View>
-              <Text style={styles.slogan}>Let the adventure begin</Text>
-              <Text style={styles.subtitle}>Featured</Text>
+              <TitleText style={styles.slogan}>
+                Let the adventure begin
+              </TitleText>
+              <TitleText style={styles.subtitle}>Featured</TitleText>
               <HorizontalList
                 data={featuredPlaces}
                 navigation={props.navigation}
@@ -71,7 +76,7 @@ const PlaceListScreen = props => {
             </View>
           )}
           data={places}
-          contentContainerStyle={{ paddingBottom: 20, paddingTop: 90 }}
+          contentContainerStyle={{ paddingBottom: 40, paddingTop: 90 }}
           keyExtractor={item => item.id}
           renderItem={itemData => (
             <Place
@@ -115,6 +120,7 @@ const styles = StyleSheet.create({
     marginTop: -90,
     fontSize: 20,
     color: "white",
+
     fontWeight: "bold"
   },
   image: {

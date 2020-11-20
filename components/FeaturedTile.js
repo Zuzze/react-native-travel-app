@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import StarRating from "./StarRating";
+import BodyText from "./BodyText";
 
 const FeaturedTile = props => {
   return (
@@ -20,7 +21,7 @@ const FeaturedTile = props => {
             count={Math.floor(Math.random() * 40) + 1}
             rating={Math.floor(Math.random() * 6) + 4}
           />
-          <Text style={styles.title}>{props.title}</Text>
+          <BodyText style={styles.title}>{props.title}</BodyText>
         </View>
       </View>
     </TouchableOpacity>
@@ -70,8 +71,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "black",
-    fontSize: 14,
-    marginBottom: 5
+    fontSize: 12,
+    marginBottom: -7
   },
   address: {
     color: "#666",

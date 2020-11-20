@@ -9,7 +9,7 @@ const MapPreview = props => {
 
   const mapType = "satellite"; // hybrid, satellite, roadmap, terrain
   const zoom = 13;
-  const markerColor = "0x82A7CD"; // any web color in 24 bit format e.g. 0xFFFFCC or black, brown, green, purple, yellow, blue, gray, orange, red, white
+  const markerColor = "white"; //"0x82A7CD"; // any web color in 24 bit format e.g. 0xFFFFCC or black, brown, green, purple, yellow, blue, gray, orange, red, white
   const markerSize = "small"; // tiny, mid, small, normal (default)
   const markerLabel = "A"; // only visible on mid and default size
   const centerCoords = `${props.location?.lat ?? 0},${props.location?.lng ??

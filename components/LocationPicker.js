@@ -12,6 +12,7 @@ import * as Permissions from "expo-permissions";
 
 import Colors from "../constants/Colors";
 import MapPreview from "./MapPreview";
+import TitleText from "./TitleText";
 
 /** Component to use phone native features to get location */
 const LocationPicker = props => {
@@ -101,30 +102,29 @@ const LocationPicker = props => {
         {isFetching ? (
           <ActivityIndicator size="large" color={Colors.primary} />
         ) : (
-          <Text>No location chosen yet!</Text>
+          <TitleText>No location chosen yet!</TitleText>
         )}
       </MapPreview>
-      <View style={styles.actions}>
-        <Button
-          title="Pick on Map"
-          color={Colors.primary}
-          onPress={handleMapPress}
-        />
-      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   locationPicker: {
-    marginBottom: 15
+    marginBottom: 15,
+    borderRadius: 30,
+    overflow: "hidden",
+    height: 149
+    /*elevation: 5,
+    shadowColor: "gray",
+    shadowOpacity: 0.26,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 2 }*/
   },
   mapPreview: {
     marginBottom: 10,
     width: "100%",
-    height: 150,
-    borderColor: "#ccc",
-    borderWidth: 1
+    height: 150
   },
   actions: {
     flexDirection: "row",
@@ -141,4 +141,11 @@ export default LocationPicker;
           color={Colors.primary}
           onPress={handleGetLocationButtonPress}
         />
+           <View style={styles.actions}>
+        <Button
+          title="Pick on Map"
+          color={Colors.primary}
+          onPress={handleMapPress}
+        />
+      </View>
  */
