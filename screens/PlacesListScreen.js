@@ -4,6 +4,7 @@ import {
   View,
   Text,
   Image,
+  Button,
   ImageBackground,
   StyleSheet
 } from "react-native";
@@ -11,18 +12,29 @@ import { useSelector, useDispatch } from "react-redux";
 import Place from "../components/Place";
 import * as actions from "../store/actions";
 import HorizontalList from "../components/HorizontalList";
-import { featuredPlaces } from "../data/featuredPlaces";
 import BodyText from "../components/BodyText";
 import TitleText from "../components/TitleText";
+import Colors from "../constants/Colors";
 
 const PlaceListScreen = props => {
   // note that name of the file in store is the first key, second one is inside places state
   const places = useSelector(state => state.places.places);
-  console.log(
-    "PLACES LIST",
-    places.map(place => place.title)
-  );
+  const featuredPlaces = useSelector(state => state.places.featured);
+
+  // console.log("PLACES LIST", places);
+  // console.log("FEATURED LIST", featuredPlaces);
+
   const dispatch = useDispatch();
+
+  const Featured = () => {
+    return (
+      <View>
+        <TitleText style={styles.slogan}>Let the adventure begin</TitleText>
+        <TitleText style={styles.subtitle}>Featured</TitleText>
+        <HorizontalList data={featuredPlaces} navigation={props.navigation} />
+      </View>
+    );
+  };
 
   // load places from local SQLite db
   useEffect(() => {
@@ -35,16 +47,17 @@ const PlaceListScreen = props => {
         <ImageBackground
           source={{
             uri:
-              "https://cdn.pixabay.com/photo/2020/11/16/22/58/mountains-5750804_1280.jpg"
+              "https://cdn.pixabay.com/photo/2019/11/15/15/48/mountain-4628685_1280.jpg"
           }}
           style={styles.image}
         >
+          <Featured />
           <View styles={styles.card}>
             <ImageBackground
               source={require("../assets/blur.png")}
               style={styles.cardBackground}
             >
-              <BodyText style={styles.emptyText}>No places yet</BodyText>
+              <BodyText style={styles.emptyText}>No own places yet</BodyText>
             </ImageBackground>
           </View>
         </ImageBackground>
@@ -63,18 +76,7 @@ const PlaceListScreen = props => {
         style={styles.image}
       >
         <FlatList
-          ListHeaderComponent={() => (
-            <View>
-              <TitleText style={styles.slogan}>
-                Let the adventure begin
-              </TitleText>
-              <TitleText style={styles.subtitle}>Featured</TitleText>
-              <HorizontalList
-                data={featuredPlaces}
-                navigation={props.navigation}
-              />
-            </View>
-          )}
+          ListHeaderComponent={() => <Featured />}
           data={places}
           contentContainerStyle={{ paddingBottom: 40, paddingTop: 90 }}
           keyExtractor={item => item.id}
@@ -84,7 +86,8 @@ const PlaceListScreen = props => {
                 props.navigation.navigate("Place", {
                   placeTitle: itemData.item.title,
                   placeId: itemData.item.id,
-                  placeImage: itemData.item.imageUri
+                  placeImage: itemData.item.imageUri,
+                  featured: false
                 });
               }}
               imageUri={itemData.item.imageUri}
@@ -105,7 +108,9 @@ const styles = StyleSheet.create({
   },
 
   emptyText: {
-    fontSize: 20,
+    fontSize: 18,
+    color: Colors.dark,
+    fontFamily: "montserrat",
     textAlign: "center"
   },
   emptyImage: {
@@ -118,10 +123,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(56,88,175,0.2)",
     paddingVertical: 20,
     marginTop: -90,
-    fontSize: 20,
-    color: "white",
-
-    fontWeight: "bold"
+    fontSize: 16,
+    color: "white"
   },
   image: {
     flex: 1,
@@ -152,7 +155,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     padding: 50,
-    margin: 20
+    margin: 20,
+    borderRadius: 20,
+    overflow: "hidden"
   },
   text: {
     color: "white",

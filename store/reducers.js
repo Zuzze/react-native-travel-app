@@ -1,16 +1,20 @@
 import { ADD_PLACE, SET_PLACES, DELETE_PLACE } from "./actions";
 import Place from "../models/place";
+import { featuredPlaces } from "../data/featuredPlaces";
 
 const initialState = {
-  places: []
+  places: [],
+  featured: featuredPlaces // Connect this with dynamic API data if wanted
 };
 
 export default placesReducer = (state = initialState, action) => {
-  console.log("REDUX REDUCER: adding place...", action.payload);
+  console.log("REDUX REDUCER: SET_PLACES.", action.payload);
+
   switch (action.type) {
     case SET_PLACES:
       // format SQLite data to match our Place() model
       return {
+        ...state,
         places: action.places.map(
           pl =>
             new Place(
@@ -34,6 +38,7 @@ export default placesReducer = (state = initialState, action) => {
       );
       console.log("REDUX  REDUCER: ADD_PLACE", newPlace);
       return {
+        ...state,
         places: state.places.concat(newPlace)
       };
     case DELETE_PLACE:
@@ -42,6 +47,7 @@ export default placesReducer = (state = initialState, action) => {
       );
       console.log("REDUX  REDUCER: DELETE_PLACE", updatedPlaces);
       return {
+        ...state,
         places: updatedPlaces
       };
     default:

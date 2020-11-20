@@ -24,7 +24,6 @@ const NewPlacesScreen = props => {
   const dispatch = useDispatch();
 
   const handleTitleChange = value => {
-    console.log(value);
     setTitle(value);
   };
 
@@ -34,7 +33,6 @@ const NewPlacesScreen = props => {
 
   // wrap to useCallback so that functiion is not created again on every location pick
   const handleLocationPick = useCallback(location => {
-    console.log("NEW PLACE: handleLocationPick", location);
     setSelectedLocation(location);
   }, []);
 
@@ -101,7 +99,7 @@ const styles = StyleSheet.create({
 
     marginBottom: 15,
     paddingVertical: 4,
-    paddingHorizontal: 2
+    paddingHorizontal: 20
   },
   button: {
     borderRadius: 30,

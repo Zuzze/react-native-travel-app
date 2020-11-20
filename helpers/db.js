@@ -67,7 +67,7 @@ export const deletePlaceFromDatabase = id => {
         // _ is a repetition of your query
         (_, result) => {
           console.log("Place deleted successfully");
-          console.log("Results", result.rowsAffected);
+
           resolve(result);
         },
         // _ is a repetition of your query

@@ -21,7 +21,7 @@ const LocationPicker = props => {
 
   // old props.navigation.getParam("pickedLocation") => props.route.params.pickedLocation
   // https://reactnavigation.org/docs/upgrading-from-4.x/#no-more-getparam
-  console.log("LOCATION PICKER", props);
+
   const mapPickedLocation = props.route.params?.pickedLocation ?? null;
 
   const { onLocationPicked } = props;
@@ -70,7 +70,7 @@ const LocationPicker = props => {
         lat: location.coords.latitude,
         lng: location.coords.longitude
       };
-      console.log("LOCATION PICKER: location coordinates", locationCoordinates);
+
       // save location to component state hooks
       setPickedLocation(locationCoordinates);
       // trigger location to parent
@@ -88,7 +88,7 @@ const LocationPicker = props => {
   const handleMapPress = () => {
     // navigate to map page to show full page map
     props.navigation.navigate("Map", {
-      pickedLocation
+      initialLocation: pickedLocation
     });
   };
 

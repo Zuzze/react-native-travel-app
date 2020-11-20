@@ -32,7 +32,6 @@ export const addPlace = (title, image, location) => {
     }
 
     const address = resData.results[0].formatted_address;
-    console.log("AADDRESS", address);
 
     // image, move async moves image from place A to B
     const fileName = image.split("/").pop();

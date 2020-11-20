@@ -17,16 +17,18 @@ const MapScreen = props => {
   const readonly = props.route.params.readonly;
 
   const [selectedLocation, setSelectedLocation] = useState(initialLocation);
-
   // react-native-maps format
   // latitude and longitude define the center focus point of the map
-  const mapRegion = {
+
+  const [mapRegion, setMapRegion] = useState({
     latitude: initialLocation ? initialLocation.lat : 37.78,
     longitude: initialLocation ? initialLocation.lng : -122.43,
     // surface region
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421
-  };
+  });
+
+  console.log(initialLocation);
 
   const handleSelectLocation = event => {
     if (readonly) {
@@ -36,10 +38,14 @@ const MapScreen = props => {
       lat: event.nativeEvent.coordinate.latitude,
       lng: event.nativeEvent.coordinate.longitude
     });
+    setMapRegion({
+      ...mapRegion,
+      latitude: event.nativeEvent.coordinate.latitude,
+      longitude: event.nativeEvent.coordinate.longitude
+    });
   };
 
   const savePickedLocation = useCallback(() => {
-    console.log("MAP SCREEN: selected location", selectedLocation);
     if (!selectedLocation) {
       // could show an alert!
       console.error("MAP SCREEN: Location not valid");
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
   },
   headerButtonText: {
     fontSize: 16,
-    color: Platform.OS === "android" ? "white" : Colors.primary
+    color: Colors.dark
   }
 });
 

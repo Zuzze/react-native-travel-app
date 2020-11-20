@@ -9,7 +9,7 @@ const HorizontalList = props => {
       data={props.data}
       contentContainerStyle={{
         paddingHorizontal: 20,
-        paddingTop: 20,
+        paddingTop: 0,
         paddingBottom: 10
       }}
       keyExtractor={item => item.id}

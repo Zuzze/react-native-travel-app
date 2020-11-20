@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
   imagePreview: {
     width: "100%",
     height: 200,
-
     backgroundColor: "rgba(255, 255, 255, 0.7)",
     justifyContent: "center",
     alignItems: "center",
@@ -83,7 +82,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    borderRadius: 30
   },
   noImageContainer: {
     alignItems: "center"

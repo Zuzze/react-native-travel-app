@@ -23,15 +23,13 @@ const Place = props => {
         <Image
           style={styles.image}
           source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2020/11/01/11/19/mountains-5703439_1280.jpg"
+            uri: props.imageUri
           }}
         />
         <View style={styles.infoContainer}>
-          <TitleText style={styles.title}>Alpstein</TitleText>
-          <StarRating rating={4} count={21} />
+          <Text style={styles.title}>{props.title}</Text>
+          <Text style={styles.address}>{props.address}</Text>
         </View>
-        <BodyText style={styles.address}>Appenzell District</BodyText>
       </View>
     </TouchableOpacity>
   );
@@ -88,28 +86,33 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "black",
-    fontSize: 18,
-    marginBottom: 5
+    width: "40%",
+    fontSize: 18
   },
   address: {
+    width: "60%",
     color: "#666",
-    fontSize: 16,
-    textAlign: "left",
-    marginLeft: 20
+    fontSize: 14,
+
+    paddingLeft: 10
   }
 });
 
 export default Place;
 
 /*
- <Image
+
+
+             <Image
           style={styles.image}
           source={{
-            uri: props.imageUri
+            uri:
+              "https://cdn.pixabay.com/photo/2020/11/01/11/19/mountains-5703439_1280.jpg"
           }}
         />
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>{props.title}</Text>
-          <Text style={styles.address}>{props.address}</Text>
+          <TitleText style={styles.title}>Alpstein</TitleText>
+          <StarRating rating={4} count={21} />
         </View>
+        <BodyText style={styles.address}>Appenzell District</BodyText>
 */

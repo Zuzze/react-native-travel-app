@@ -13,7 +13,6 @@ import MapPreview from "../components/MapPreview";
 import Colors from "../constants/Colors";
 import { deletePlaceFromDatabase } from "../helpers/db";
 import * as actions from "../store/actions";
-import { featuredPlaces } from "../data/featuredPlaces";
 import StarRating from "../components/StarRating";
 import TitleText from "../components/TitleText";
 import BodyText from "../components/BodyText";
@@ -21,12 +20,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const PlaceDetailsScreen = props => {
-  const { placeTitle, placeId } = props.route.params;
+  const { placeTitle, placeId, featured } = props.route.params;
 
   let selectedPlace;
 
-  if (props.route.params.featured) {
-    selectedPlace = featuredPlaces.find(place => place.id === placeId);
+  if (featured) {
+    selectedPlace = useSelector(state => {
+      return state.places.featured.find(place => place.id === placeId);
+    });
   } else {
     selectedPlace = useSelector(state => {
       return state.places.places.find(place => place.id === placeId);
@@ -34,7 +35,6 @@ const PlaceDetailsScreen = props => {
   }
 
   const dispatch = useDispatch();
-  console.log("SELECTE PLACE", selectedPlace);
 
   const selectedLocation = {
     lat: selectedPlace?.lat ?? 0,
@@ -54,15 +54,13 @@ const PlaceDetailsScreen = props => {
   }, [placeTitle]);
 
   const handleShowMap = () => {
-    console.log("handle", selectedLocation);
     props.navigation.navigate("Map", {
       readonly: true,
       initialLocation: selectedLocation
     });
   };
 
-  const handleDeletePlace = async () => {
-    console.log("handling delete button press");
+  const deletePlace = async () => {
     try {
       const placeDeleted = await deletePlaceFromDatabase(placeId);
       if (placeDeleted) {
@@ -81,6 +79,22 @@ const PlaceDetailsScreen = props => {
     }
   };
 
+  const handleDeletePlace = () => {
+    Alert.alert(
+      "Are you sure?",
+      "All information of this place will be lost.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => deletePlace() }
+      ],
+      { cancelable: true }
+    );
+  };
+
   return (
     <ScrollView contentContainerStyle={{ alignItems: "center" }}>
       <Image
@@ -90,7 +104,9 @@ const PlaceDetailsScreen = props => {
       <View style={styles.locationContainer}>
         <View style={styles.titleContainer}>
           <TitleText style={styles.title}>{placeTitle}</TitleText>
-          <StarRating style={styles.rating} count={2} rating={3} size={20} />
+          {featured && (
+            <StarRating style={styles.rating} count={34} rating={4} size={20} />
+          )}
         </View>
         <View style={styles.addressContainer}>
           <BodyText style={styles.address}>
@@ -103,11 +119,13 @@ const PlaceDetailsScreen = props => {
             location={selectedLocation}
             onPress={handleShowMap}
           />
-          <TouchableOpacity style={styles.button} onPress={handleDeletePlace}>
-            <BodyText>
-              Delete <Ionicons name="ios-trash" size={20} />
-            </BodyText>
-          </TouchableOpacity>
+          {!featured && (
+            <TouchableOpacity style={styles.button} onPress={handleDeletePlace}>
+              <BodyText>
+                Delete <Ionicons name="ios-trash" size={20} />
+              </BodyText>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </ScrollView>
