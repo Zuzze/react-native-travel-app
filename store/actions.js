@@ -16,22 +16,38 @@ export const addPlace = (title, image, location) => {
   // operation is asynchronus so use async
   return async dispatch => {
     //Location
-    const response = await fetch(
+    const addressResponse = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
         location.lat
       },${location.lng}&key=${ENV().googleApiKey}`
     );
 
-    if (!response.ok) {
-      throw new Error("Something went wrong!");
+    const elevationResponse = await fetch(
+      `https://maps.googleapis.com/maps/api/elevation/json?locations=${
+        location.lat
+      },${location.lng}&key=${ENV().googleApiKey}`
+    );
+
+    if (!addressResponse.ok || !elevationResponse.ok) {
+      throw new Error("Request failed!");
     }
 
-    const resData = await response.json();
-    if (!resData.results) {
-      throw new Error("Something went wrong!");
+    const addressResData = await addressResponse.json();
+
+    if (!addressResData.results) {
+      throw new Error("Address geocoding could not be handled!");
     }
 
-    const address = resData.results[0].formatted_address;
+    const elevationResData = await elevationResponse.json();
+    if (!elevationResData.results) {
+      throw new Error("Elevation data could not be handled!");
+    }
+
+    const address = addressResData.results[0].formatted_address;
+    const elevation = elevationResData.results[0].elevation
+      ? elevationResData.results[0].elevation.toFixed()
+      : "Not available";
+    console.log("ELEVATION", elevation);
 
     // image, move async moves image from place A to B
     const fileName = image.split("/").pop();
@@ -50,7 +66,8 @@ export const addPlace = (title, image, location) => {
         newPath,
         address,
         location.lat,
-        location.lng
+        location.lng,
+        elevation
       );
       console.log(dbResult);
 
@@ -64,7 +81,8 @@ export const addPlace = (title, image, location) => {
           imageUri: newPath,
           address: address,
           lat: location.lat,
-          lng: location.lng
+          lng: location.lng,
+          elevation
         }
       });
     } catch (err) {

@@ -110,7 +110,12 @@ const PlaceDetailsScreen = props => {
         </View>
         <View style={styles.addressContainer}>
           <BodyText style={styles.address}>
+            <Ionicons name="ios-pin" />{" "}
             {selectedPlace?.address ?? "Not available"}
+          </BodyText>
+          <BodyText style={styles.elevation}>
+            <Ionicons name="ios-arrow-up" /> Elevation{" "}
+            {selectedPlace?.elevation} m
           </BodyText>
         </View>
         <View style={styles.mapContainer}>
@@ -175,7 +180,13 @@ const styles = StyleSheet.create({
     color: "#333333"
   },
   address: {
-    fontSize: 18,
+    fontSize: 16,
+    color: "gray",
+    textAlign: "left"
+  },
+  elevation: {
+    fontSize: 16,
+    paddingTop: 20,
     color: "gray",
     textAlign: "left"
   },

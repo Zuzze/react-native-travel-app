@@ -34,7 +34,8 @@ export default placesReducer = (state = initialState, action) => {
         action.payload.imageUri,
         action.payload.address,
         action.payload.lat,
-        action.payload.lng
+        action.payload.lng,
+        action.payload.elevation
       );
       console.log("REDUX  REDUCER: ADD_PLACE", newPlace);
       return {
